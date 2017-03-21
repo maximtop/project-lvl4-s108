@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
-  "bin": {
-    "hexlet": "dist/bin/hexlet.js"
-  },
   "engines": {
     "node": "7.7.1"
   },
@@ -69,6 +66,7 @@
     "webpack": "*"
   },
   "devDependencies": {
+    "autoprefixer": "^6.7.7",
     "babel-eslint": "*",
     "eslint": "*",
     "eslint-config-airbnb-base": "*",
@@ -77,6 +75,7 @@
     "flow-bin": "^0.37",
     "flow-typed": "*",
     "jest": "^18",
-    "nodemon": "*"
+    "nodemon": "*",
+    "postcss-loader": "^1.3.3"
   }
 }
