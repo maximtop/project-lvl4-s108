@@ -63,10 +63,12 @@
     "sqlite3": "*",
     "style-loader": "*",
     "umzug": "^1.11.0",
-    "webpack": "*"
+    "webpack": "*",
+    "postcss-loader": "^1.3.3",
+    "autoprefixer": "^6.7.7"
+
   },
   "devDependencies": {
-    "autoprefixer": "^6.7.7",
     "babel-eslint": "*",
     "eslint": "*",
     "eslint-config-airbnb-base": "*",
@@ -75,7 +77,6 @@
     "flow-bin": "^0.37",
     "flow-typed": "*",
     "jest": "^18",
-    "nodemon": "*",
-    "postcss-loader": "^1.3.3"
+    "nodemon": "*"
   }
 }
