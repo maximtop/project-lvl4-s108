@@ -23,10 +23,8 @@ import container from './container';
 
 export default () => {
   const app = new Koa();
-  
   dotenv.config();
   rollbar.init(process.env.ROLLBAR_TOKEN);
-
   app.keys = ['some secret hurr'];
   app.use(session(app));
   app.use(flash());

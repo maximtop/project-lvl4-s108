@@ -5,9 +5,16 @@ block content
     thead
       tr
         th id
-        th Name
+        th Status Name
     tbody
-      each task in taskStatuses
+      each taskStatus in taskStatuses
         tr
           td= taskStatus.id
           td= taskStatus.name
+            span.ml-1
+              a(href='task-statuses/') delete
+              |
+              | |
+              |
+              a(href='task-statuses/edit') edit
+          //TODO add links to delete and update
