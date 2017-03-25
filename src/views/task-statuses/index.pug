@@ -1,0 +1,20 @@
+extends /layouts/application.pug
+
+block content
+  table.table.table-stripped
+    thead
+      tr
+        th id
+        th Status Name
+    tbody
+      each taskStatus in taskStatuses
+        tr
+          td= taskStatus.id
+          td= taskStatus.name
+            span.ml-1
+              a(href='task-statuses/' + taskStatus.id + '?_method=DELETE') delete
+              |
+              | |
+              |
+              a(href='task-statuses/?_method=PATCH') edit
+          //TODO add links to delete and update

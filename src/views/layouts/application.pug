@@ -10,11 +10,16 @@ html(lang="en")
     nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
       button.navbar-toggler.navbar-toggler-right
         span.navbar-toggler-icon
-      a.navbar-brand(href="/") Task Manager
+      a.navbar-brand(href="/") Maximtop Task Manager
       .collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item.active
             a.nav-link(href=urlFor('users')) Users
+          li.nav-item.active
+            a.nav-link(href=urlFor('tasks')) Tasks
+          li.nav-item.active
+            a.nav-link(href=urlFor('taskStatuses')) Task Statuses
+
         ul.navbar-nav
           if isSignedIn()
             li.nav-item
