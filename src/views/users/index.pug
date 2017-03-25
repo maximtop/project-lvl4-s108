@@ -13,3 +13,10 @@ block content
           td= user.fullName
           td= user.email
           td= user.createdAt
+          td
+            span.ml-1
+              a(href='users/' + user.id + '?_method=DELETE') delete
+              |
+              | |
+              |
+              a(href='users/' + user.id + '?_method=PATCH') edit
