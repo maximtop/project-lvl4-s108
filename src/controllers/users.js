@@ -20,5 +20,18 @@ export default (router, { User }) => {
       } catch (e) {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
+    })
+    .get('/users/:id', async (ctx) => {
+      const user = await User.findById(ctx.params.id);
+      ctx.render('users/profile', { user });
+    })
+    .patch('/users/:id', async (ctx) => {
+      ctx.flash.set('button edit works');
+      ctx.redirect(router.url('root'));
+    })
+    .delete('/users/:id', async (ctx) => {
+      ctx.flash.set('button delete works');
+      ctx.redirect(router.url('root'));
     });
+  
 };
