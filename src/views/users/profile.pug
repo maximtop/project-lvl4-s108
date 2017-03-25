@@ -11,6 +11,9 @@ block content
       h3= user.createdAt
   .row.justify-content-center
     .col-1
-      a(href= user.id + '?_method=PATCH' role='button' class='btn btn-primary') Edit
+      form(action= `${user.id}?_method=PATCH` method='post')
+        button.btn.btn-primary(type='submit') Edit
+      //a(href= user.id + '?_method=PATCH' role='button' class='btn btn-primary') Edit
     .col-1
-      a(href= user.id + '?_method=DELETE' role='button' class='btn btn-danger') Delete
+      form(action= `${user.id}?_method=DELETE` method='post')
+        button.btn.btn-danger(type='submit') Delete

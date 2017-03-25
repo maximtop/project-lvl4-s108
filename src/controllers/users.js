@@ -29,8 +29,8 @@ export default (router, { User }) => {
       ctx.flash.set('button edit works');
       ctx.redirect(router.url('root'));
     })
-    .delete('/users/:id', async (ctx) => {
-      ctx.flash.set('button delete works');
+    .delete('user', '/users/:id', async (ctx) => {
+      console.log(ctx);
       ctx.redirect(router.url('root'));
     });
   
