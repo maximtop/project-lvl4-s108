@@ -3,6 +3,7 @@ import buildFormObj from '../lib/formObjectBuilder';
 export default (router, { TaskStatus }) => {
   router
     .get('taskStatuses', '/task-statuses', async (ctx) => {
+      console.log(ctx.request);
       const taskStatuses = await TaskStatus.findAll();
       ctx.render('task-statuses', { taskStatuses });
     })
@@ -20,5 +21,11 @@ export default (router, { TaskStatus }) => {
       } catch (e) {
         ctx.render('task-statuses/new', { f: buildFormObj(form, e) });
       }
-    });
+    })
+    //TODO why method is not allowed?
+    // .delete('/task-statuses/:id', async (ctx) => {
+    //   console.log(this.params);
+    //   console.log(ctx.request);
+    //   ctx.redirect(router.url('taskStatuses'));
+    // });
 };

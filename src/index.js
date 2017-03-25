@@ -45,12 +45,12 @@ export default () => {
   app.use(middleware({
     config: getWebpackConfig(),
   }));
-
+  
   app.use(koaLogger());
   const router = new Router();
   addRoutes(router, container);
-  app.use(router.allowedMethods());
   app.use(router.routes());
+  app.use(router.allowedMethods());
 
   const pug = new Pug({
     viewPath: path.join(__dirname, 'views'),
@@ -67,6 +67,7 @@ export default () => {
   pug.use(app);
   app.on('error', err => {
     rollbar.handleError(err);
+    console.log(err);
   });
   return app;
 };

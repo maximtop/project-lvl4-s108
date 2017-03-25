@@ -12,9 +12,9 @@ block content
           td= taskStatus.id
           td= taskStatus.name
             span.ml-1
-              a(href='task-statuses/') delete
+              a(href='task-statuses/' + taskStatus.id + '?_method=DELETE') delete
               |
               | |
               |
-              a(href='task-statuses/edit') edit
+              a(href='task-statuses/?_method=PATCH') edit
           //TODO add links to delete and update
