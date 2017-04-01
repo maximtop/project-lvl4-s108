@@ -25,13 +25,30 @@ export default (router, { User }) => {
       const user = await User.findById(ctx.params.id);
       ctx.render('users/profile', { user });
     })
-    .patch('/users/:id', async (ctx) => {
-      ctx.flash.set('button edit works');
+    // .patch('/users/:id', async (ctx) => {
+    //   const id = ctx.params.id;
+    //   const user = await User.findById(id);
+    //   ctx.render('users/new', {f: buildFormObj(user)});
+    // })
+    .get('userEdit', '/users/:id/edit', async (ctx) => {
+      const id = ctx.params.id;
+      const user = await User.findById(id);
+      ctx.render('users/edit', {f: buildFormObj(user)});
+    })
+    .patch('users', '/users/:id', async(ctx) =>{
+      const form = ctx.request.body.form;
+      console.log(form);
+      ctx.flash.set('User info was updated');
       ctx.redirect(router.url('root'));
     })
-    .delete('user', '/users/:id', async (ctx) => {
-      console.log(ctx);
-      ctx.redirect(router.url('root'));
+    .delete('userDelete', '/users/:id', async (ctx) => {
+      const id = ctx.params.id;
+      await User.destroy({
+        where: {
+          id : id
+        }
+      });
+      ctx.redirect(router.url('users'));
     });
   
 };
