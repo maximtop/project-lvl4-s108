@@ -25,21 +25,30 @@ export default (router, { User }) => {
       const user = await User.findById(ctx.params.id);
       ctx.render('users/profile', { user });
     })
-    // .patch('/users/:id', async (ctx) => {
-    //   const id = ctx.params.id;
-    //   const user = await User.findById(id);
-    //   ctx.render('users/new', {f: buildFormObj(user)});
-    // })
     .get('userEdit', '/users/:id/edit', async (ctx) => {
       const id = ctx.params.id;
       const user = await User.findById(id);
       ctx.render('users/edit', {f: buildFormObj(user)});
     })
-    .patch('users', '/users/:id', async(ctx) =>{
+    .patch('userUpdate', '/users/:id', async(ctx) =>{
+      const id = ctx.params.id;
       const form = ctx.request.body.form;
-      console.log(form);
-      ctx.flash.set('User info was updated');
-      ctx.redirect(router.url('root'));
+      const user = await User.findById(id);
+      try {
+        await user.update({
+          email: form.email,
+          firstName: form.firstName,
+          lastName: form.lastName,
+        }, {
+          where: {
+            id: id
+          }
+        });
+        ctx.flash.set('User info was updated');
+        ctx.redirect(router.url('users'));
+      } catch (e) {
+        ctx.render('users/edit', { f: buildFormObj(user, e) });
+      }
     })
     .delete('userDelete', '/users/:id', async (ctx) => {
       const id = ctx.params.id;
@@ -50,5 +59,4 @@ export default (router, { User }) => {
       });
       ctx.redirect(router.url('users'));
     });
-  
 };
