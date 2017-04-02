@@ -45,7 +45,7 @@ export default () => {
   app.use(middleware({
     config: getWebpackConfig(),
   }));
-  
+
   app.use(koaLogger());
   const router = new Router();
   addRoutes(router, container);
@@ -65,7 +65,7 @@ export default () => {
     ],
   });
   pug.use(app);
-  app.on('error', err => {
+  app.on('error', (err) => {
     rollbar.handleError(err);
     console.log(err);
   });

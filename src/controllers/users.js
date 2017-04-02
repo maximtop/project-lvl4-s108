@@ -28,9 +28,9 @@ export default (router, { User }) => {
     .get('userEdit', '/users/:id/edit', async (ctx) => {
       const id = ctx.params.id;
       const user = await User.findById(id);
-      ctx.render('users/edit', {f: buildFormObj(user)});
+      ctx.render('users/edit', { f: buildFormObj(user) });
     })
-    .patch('userUpdate', '/users/:id', async(ctx) =>{
+    .patch('userUpdate', '/users/:id', async (ctx) => {
       const id = ctx.params.id;
       const form = ctx.request.body.form;
       const user = await User.findById(id);
@@ -41,8 +41,8 @@ export default (router, { User }) => {
           lastName: form.lastName,
         }, {
           where: {
-            id: id
-          }
+            id,
+          },
         });
         ctx.flash.set('User info was updated');
         ctx.redirect(router.url('users'));
@@ -54,8 +54,8 @@ export default (router, { User }) => {
       const id = ctx.params.id;
       await User.destroy({
         where: {
-          id : id
-        }
+          id,
+        },
       });
       ctx.redirect(router.url('users'));
     });

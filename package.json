@@ -71,7 +71,7 @@
   "devDependencies": {
     "babel-eslint": "*",
     "eslint": "*",
-    "eslint-config-airbnb-base": "*",
+    "eslint-config-airbnb-base": "^11.1.2",
     "eslint-plugin-flowtype": "*",
     "eslint-plugin-import": "*",
     "flow-bin": "^0.37",
