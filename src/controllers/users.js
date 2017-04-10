@@ -1,7 +1,9 @@
 import buildFormObj from '../lib/formObjectBuilder';
+import isSignedIn from '../lib/isSignedIn';
 
-export default (router, { User }) => {
+export default (router, { User, Task }) => {
   router
+    .use('/users', isSignedIn)
     .get('users', '/users', async (ctx) => {
       const users = await User.findAll();
       ctx.render('users', { users });
@@ -22,8 +24,12 @@ export default (router, { User }) => {
       }
     })
     .get('user', '/users/:id', async (ctx) => {
-      const user = await User.findById(ctx.params.id);
-      ctx.render('users/profile', { user });
+      try {
+        const user = await User.findById(ctx.params.id, { include: [Task] });
+        ctx.render('users/profile', { user });
+      } catch (e) {
+        console.log(e);
+      }
     })
     .get('userEdit', '/users/:id/edit', async (ctx) => {
       const id = ctx.params.id;
@@ -49,5 +55,5 @@ export default (router, { User }) => {
       } catch (e) {
         ctx.render('users/edit', { f: buildFormObj(user, e) });
       }
-    })
+    });
 };

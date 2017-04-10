@@ -1,7 +1,9 @@
 import buildFormObj from '../lib/formObjectBuilder';
+import isSignedIn from '../lib/isSignedIn';
 
 export default (router, { Task, User, TaskStatus }) => {
   router
+    .use('/tasks', isSignedIn)
     .get('tasks', '/tasks', async (ctx) => {
       try {
         const tasks = await Task.findAll({ include: [User, TaskStatus] });
@@ -33,7 +35,7 @@ export default (router, { Task, User, TaskStatus }) => {
         ctx.render('tasks/new', { f: buildFormObj(task, e) });
       }
     })
-    .get('/tasks/:id', async (ctx) => {
+    .get('task', '/tasks/:id', async (ctx) => {
       try {
         const task = await Task.findById(ctx.params.id, { include: [TaskStatus, User] });
         ctx.render('tasks/task', { task });

@@ -9,6 +9,11 @@ block content
       h3= user.email
       p createdAt:
       h3= user.createdAt
+      h3 User Tasks:
+      ul
+        each task in user.Tasks
+          li
+            a(href=urlFor('task', task.id ))= task.name
   .row.justify-content-center
     .col-1
       a(href=urlFor('userEdit', user.id) data-method='get' role='button' class='btn btn-primary' rel='nofollow') Edit

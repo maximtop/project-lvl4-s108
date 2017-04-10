@@ -43,8 +43,8 @@ export default (connect) => {
     },
     classMethods: {
       associate: (models) => {
-        // User.hasMany(models.Task, { foreignKey: 'creatorId', as: 'createdTask' });
-        User.hasMany(models.Task);
+        User.hasMany(models.Task, { foreignKey: 'creator' });
+        User.hasMany(models.Task, { foreignKey: 'assignedTo' });
       },
     },
     freezeTableName: true, // Model tableName will be the same as the model name

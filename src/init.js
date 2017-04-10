@@ -10,4 +10,9 @@ export default async () => {
     { name: 'On testing' },
     { name: 'Completed' },
   ]);
+  await models.User.bulkCreate([
+    { email: 'maximtop1@gmail.com', firstName: 'Maxim1', lastName: 'Topciu1', passwordDigest: '123' },
+    { email: 'maximtop2@gmail.com', firstName: 'Maxim2', lastName: 'Topciu2', passwordDigest: '123' },
+    { email: 'maximtop3@gmail.com', firstName: 'Maxim3', lastName: 'Topciu3', passwordDigest: '123' },
+  ]);
 };

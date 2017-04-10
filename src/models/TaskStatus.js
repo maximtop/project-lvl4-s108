@@ -14,7 +14,7 @@ export default (connect) => {
     },
   }, {
     classMethods: {
-      associate: function (models) {
+      associate: (models) => {
         TaskStatus.hasMany(models.Task);
       },
     },

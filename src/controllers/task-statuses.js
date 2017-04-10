@@ -1,7 +1,9 @@
 import buildFormObj from '../lib/formObjectBuilder';
+import isSignedIn from '../lib/isSignedIn';
 
 export default (router, { TaskStatus }) => {
   router
+    .use('/task-statuses', isSignedIn)
     .get('taskStatuses', '/task-statuses', async (ctx) => {
       const taskStatuses = await TaskStatus.findAll();
       ctx.render('task-statuses', { taskStatuses });
