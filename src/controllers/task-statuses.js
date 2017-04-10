@@ -20,5 +20,14 @@ export default (router, { TaskStatus }) => {
       } catch (e) {
         ctx.render('task-statuses/new', { f: buildFormObj(form, e) });
       }
+    })
+    .delete('taskStatusDelete', '/task-statuses/:id', async (ctx) => {
+      const id = ctx.params.id;
+      await TaskStatus.destroy({
+        where: {
+          id,
+        },
+      });
+      ctx.redirect(router.url('taskStatuses'));
     });
 };

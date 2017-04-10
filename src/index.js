@@ -36,11 +36,13 @@ export default () => {
     await next();
   });
   app.use(bodyParser());
+  /* eslint-disable */
   app.use(methodOverride((req) => {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
       return req.body._method;
     }
   }));
+  /* eslint-enable */
   app.use(serve(path.join(__dirname, '..', 'public')));
   app.use(middleware({
     config: getWebpackConfig(),
@@ -67,7 +69,6 @@ export default () => {
   pug.use(app);
   app.on('error', (err) => {
     rollbar.handleError(err);
-    console.log(err);
   });
   return app;
 };

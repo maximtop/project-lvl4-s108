@@ -21,7 +21,7 @@ export default (router, { User }) => {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
     })
-    .get('/users/:id', async (ctx) => {
+    .get('user', '/users/:id', async (ctx) => {
       const user = await User.findById(ctx.params.id);
       ctx.render('users/profile', { user });
     })
@@ -50,13 +50,4 @@ export default (router, { User }) => {
         ctx.render('users/edit', { f: buildFormObj(user, e) });
       }
     })
-    .delete('userDelete', '/users/:id', async (ctx) => {
-      const id = ctx.params.id;
-      await User.destroy({
-        where: {
-          id,
-        },
-      });
-      ctx.redirect(router.url('users'));
-    });
 };

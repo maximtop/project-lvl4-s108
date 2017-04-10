@@ -1,0 +1,23 @@
+extends /layouts/application.pug
+
+block content
+  .row.justify-content-center.mt-5
+    .col-8
+      p Name:
+      h2= task.name
+      p Description:
+      h3= task.description
+      p Assigned to:
+      h3
+        a(href=urlFor('user', task.User.id ))= task.User.fullName
+      p Status:
+      h3= task.TaskStatus.name
+      p Tag:
+      h3= task.tag
+      p Creator:
+      h3= task.creator
+  .row.justify-content-center
+    .col-1
+      a(href=urlFor('taskEdit', task.id) data-method='get' role='button' class='btn btn-primary' rel='nofollow') Edit
+    .col-1
+      a(href=urlFor('taskDelete', task.id) data-method='delete' role='button' class='btn btn-danger' rel='nofollow') Delete

@@ -4,10 +4,10 @@ mixin formFor(f, options = {})
   form(action=_.get(options, 'url') method=_.get(options, 'method', 'get'))
     block
 
-mixin input(f, property, options = { as: 'text' })
+mixin input(f, property, label, options = { as: 'text' })
   - const value = f.object[property] === undefined ? '' : f.object[property]
   .form-group(class=(f.errors[property] && 'has-danger'))
-    label= property
+    label= label
     input(name=getInputName(f, property) class='form-control' type=options['as'] value=`${value}`)
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
@@ -15,3 +15,22 @@ mixin input(f, property, options = { as: 'text' })
 mixin button(f, type = 'submit')
   .form-group
     input(class='btn' type=`${type}` value=`Save`)
+
+mixin textarea(f, property, label, options = { rows: '3' })
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    label= label
+    textarea(name=getInputName(f, property) class='form-control' value=`${value}` rows=options['rows'])
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')
+
+mixin select(f, property, label, objects, options = { value: '1', text: 'name' })
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    label= label
+    select(name=getInputName(f, property) class='form-control' value= `${value}`)
+      if objects
+        each object in objects
+          option(value= object[options['value']])= `${object[options['text']]}`
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')

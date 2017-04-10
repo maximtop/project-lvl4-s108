@@ -1,0 +1,22 @@
+extends /layouts/application.pug
+
+block content
+  table.table.table-stripped
+    thead
+      tr
+        th ID
+        th Status
+        th Name
+        th Assigned To
+        th Updated
+    tbody
+      each task in tasks
+        tr
+          td= task.id
+          td= task.TaskStatus.name
+          td
+            span.ml-1
+              a(href='tasks/' + task.id)= task.name
+          td
+            a(href=urlFor('user', task.User.id ))= task.User.fullName
+          td= task.updatedAt

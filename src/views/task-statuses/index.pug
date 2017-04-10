@@ -12,7 +12,7 @@ block content
           td= taskStatus.id
           td= taskStatus.name
             span.ml-1
-              a(href='task-statuses/' + taskStatus.id + '?_method=DELETE') delete
+              a(href=urlFor('taskStatusDelete', taskStatus.id) data-method='delete' role='button' class='btn btn-danger' rel='nofollow') Delete
               |
               | |
               |

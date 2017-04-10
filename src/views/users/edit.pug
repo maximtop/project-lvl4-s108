@@ -4,9 +4,9 @@ block content
   .row.justify-content-center.mt-5
     .col-8
       +formFor(f, { url: urlFor('userUpdate', f.object.id), method: 'post' })
-        +input(f, 'email')
-        +input(f, 'firstName')
-        +input(f, 'lastName')
-        +input(f, 'password', { as: 'password' })
+        +input(f, 'email', 'Email')
+        +input(f, 'firstName', 'First Name')
+        +input(f, 'lastName', 'Last Name')
+        +input(f, 'password', 'Password', { as: 'password' })
         input(type="hidden" name="_method" value="PATCH")
         +button(f)
