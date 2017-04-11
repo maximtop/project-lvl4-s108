@@ -17,6 +17,6 @@ block content
           td
             span.ml-1
               a(href='tasks/' + task.id)= task.name
-          td
-            a(href=urlFor('user', task.User.id ))= task.User.fullName
+          td= task.Assignee.fullName
+            //a(href=urlFor('user', task.Assignee.id ))= task.Assignee.fullName
           td= task.updatedAt

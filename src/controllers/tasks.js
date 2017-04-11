@@ -6,7 +6,7 @@ export default (router, { Task, User, TaskStatus }) => {
     .use('/tasks', isSignedIn)
     .get('tasks', '/tasks', async (ctx) => {
       try {
-        const tasks = await Task.findAll({ include: [User, TaskStatus] });
+        const tasks = await Task.findAll({ include: [{ model: User, as: 'Assignee' }, TaskStatus] });
         ctx.render('tasks', { tasks });
       } catch (e) {
         console.log(e);
@@ -17,6 +17,7 @@ export default (router, { Task, User, TaskStatus }) => {
         const task = Task.build();
         const users = await User.findAll();
         const taskStatuses = await TaskStatus.findAll();
+        console.log(ctx.session);
         ctx.render('tasks/new', { f: buildFormObj(task), users, taskStatuses });
       } catch (e) {
         console.log(e);
@@ -24,6 +25,7 @@ export default (router, { Task, User, TaskStatus }) => {
     })
     .post('tasks', '/tasks', async (ctx) => {
       const form = ctx.request.body.form;
+      // form.creatorId = ctx.session.userId;
       console.log(form);
       const task = Task.build(form);
       try {
@@ -37,7 +39,11 @@ export default (router, { Task, User, TaskStatus }) => {
     })
     .get('task', '/tasks/:id', async (ctx) => {
       try {
-        const task = await Task.findById(ctx.params.id, { include: [TaskStatus, User] });
+        const task = await Task.findById(ctx.params.id,
+          { include: [TaskStatus,
+          { model: User, as: 'Creator' },
+          { model: User, as: 'Assignee' }] });
+        console.log(task);
         ctx.render('tasks/task', { task });
       } catch (e) {
         console.log(e);

@@ -4,6 +4,7 @@ console:
 	npm run gulp console
 
 init:
+	rm -rf database.sqlite
 	npm run gulp init
 
 start:

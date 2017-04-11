@@ -25,7 +25,7 @@ export default (router, { User, Task }) => {
     })
     .get('user', '/users/:id', async (ctx) => {
       try {
-        const user = await User.findById(ctx.params.id, { include: [Task] });
+        const user = await User.findById(ctx.params.id, { include: [{ model: Task, as: 'Assignee' }] });
         ctx.render('users/profile', { user });
       } catch (e) {
         console.log(e);

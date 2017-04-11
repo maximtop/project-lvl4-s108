@@ -38,8 +38,8 @@ export default (connect) => {
       classMethods: {
         associate: (models) => {
           Task.belongsTo(models.TaskStatus, { foreignKey: 'status' });
-          Task.belongsTo(models.User, { foreignKey: 'creator' });
-          Task.belongsTo(models.User, { foreignKey: 'assignedTo' });
+          Task.belongsTo(models.User, { as: 'Assignee', foreignKey: 'assignedTo' });
+          Task.belongsTo(models.User, { as: 'Creator', foreignKey: 'creator' });
         },
       },
       freezeTableName: true,

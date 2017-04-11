@@ -9,13 +9,13 @@ block content
       h3= task.description
       p Assigned to:
       h3
-        a(href=urlFor('user', task.User.id ))= task.User.fullName
+        a(href=urlFor('user', task.Assignee.id ))= task.Assignee.fullName
       p Status:
       h3= task.TaskStatus.name
       p Tag:
       h3= task.tag
       p Creator:
-      h3= task.creator
+      h3= task.Creator.fullName
   .row.justify-content-center
     .col-1
       a(href=urlFor('taskEdit', task.id) data-method='get' role='button' class='btn btn-primary' rel='nofollow') Edit
