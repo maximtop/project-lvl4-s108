@@ -8,7 +8,7 @@ mixin input(f, property, label, options = { as: 'text' })
   - const value = f.object[property] === undefined ? '' : f.object[property]
   .form-group(class=(f.errors[property] && 'has-danger'))
     label= label
-    input(name=getInputName(f, property) class='form-control' type=options['as'] value= `${value}`)
+    input(name= getInputName(f, property) class='form-control' type=options['as'] value=`${value}`)
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
 
@@ -20,7 +20,7 @@ mixin textarea(f, property, label, options = { rows: '3' })
   - const value = f.object[property] === undefined ? '' : f.object[property]
   .form-group(class=(f.errors[property] && 'has-danger'))
     label= label
-    textarea(name=getInputName(f, property) class='form-control' value=`${value}` rows=options['rows'])
+    textarea(name=getInputName(f, property) class='form-control' rows=options['rows'])= value
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')
 
@@ -31,6 +31,6 @@ mixin select(f, property, label, objects, options = { value: '1', text: 'name' }
     select(name=getInputName(f, property) class='form-control' value= `${value}`)
       if objects
         each object in objects
-          option(value= object[options['value']])= `${object[options['text']]}`
+          option(value= object[options['value']], selected= object[options['value']] === parseInt(value) )= `${object[options['text']]}`
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')

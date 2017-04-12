@@ -1,7 +1,7 @@
 import buildFormObj from '../lib/formObjectBuilder';
 import isSignedIn from '../lib/isSignedIn';
 
-export default (router, { Task, User, TaskStatus }) => {
+export default (router, { Task, User, TaskStatus, Tag }) => {
   router
     .use('/tasks', isSignedIn)
     .get('tasks', '/tasks', async (ctx) => {
@@ -25,16 +25,31 @@ export default (router, { Task, User, TaskStatus }) => {
     })
     .post('tasks', '/tasks', async (ctx) => {
       const form = ctx.request.body.form;
-      // form.creatorId = ctx.session.userId;
-      console.log(form);
+      form.creator = ctx.session.userId;
+      const users = await User.findAll();
+      const taskStatuses = await TaskStatus.findAll();
+      const tagNames = form.tags.split(',')
+        .map(tagName => tagName.trim())
+        .filter(tagName => tagName.length > 0);
       const task = Task.build(form);
       try {
         await task.save();
-        ctx.flash.set('task has been created');
-        ctx.redirect(router.url('root'));
+        if (tagNames.length > 0) {
+          Promise.all(tagNames.map(async (tagName) => {
+            const tag = await Tag.findOne({ where: { name: tagName } });
+            if (tag) {
+              await task.addTags(tag);
+            } else {
+              const addTag = await Tag.create({ name: tagName });
+              await task.addTags(addTag);
+            }
+          }));
+        }
+        ctx.flash.set(`task *${form.name}* has been created`);
+        ctx.redirect(router.url('tasks'));
       } catch (e) {
         console.log(e);
-        ctx.render('tasks/new', { f: buildFormObj(task, e) });
+        ctx.render('tasks/new', { f: buildFormObj(task, e), users, taskStatuses });
       }
     })
     .get('task', '/tasks/:id', async (ctx) => {
@@ -42,13 +57,14 @@ export default (router, { Task, User, TaskStatus }) => {
         const task = await Task.findById(ctx.params.id,
           { include: [TaskStatus,
           { model: User, as: 'Creator' },
-          { model: User, as: 'Assignee' }] });
+          { model: User, as: 'Assignee' },
+            Tag] });
         console.log(task);
         ctx.render('tasks/task', { task });
       } catch (e) {
         console.log(e);
       }
-    });
+    })
     // .get('taskEdit', '/tasks/:id/edit', async (ctx) => {
     //   const id = ctx.params.id;
     //   const task = await Task.findById(id);
@@ -74,13 +90,14 @@ export default (router, { Task, User, TaskStatus }) => {
     //     ctx.render('tasks/edit', { f: buildFormObj(task, e) });
     //   }
     // })
-    // .delete('taskDelete', '/tasks/:id', async (ctx) => {
-    //   const id = ctx.params.id;
-    //   await Task.destroy({
-    //     where: {
-    //       id,
-    //     },
-    //   });
-    //   ctx.redirect(router.url('tasks'));
-    // });
+    .delete('taskDelete', '/tasks/:id', async (ctx) => {
+      const id = ctx.params.id;
+      await Task.destroy({
+        where: {
+          id,
+        },
+      });
+      ctx.flash.set(`task id #${id} has been deleted`);
+      ctx.redirect(router.url('tasks'));
+    });
 };

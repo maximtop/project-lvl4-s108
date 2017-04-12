@@ -11,7 +11,7 @@ block content
       h3= user.createdAt
       h3 User Tasks:
       ul
-        each task in user.Assignee
+        each task in user.AssignedTask
           li
             a(href=urlFor('task', task.id ))= task.name
   .row.justify-content-center

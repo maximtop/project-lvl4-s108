@@ -26,12 +26,6 @@ export default (connect) => {
     },
     assignedTo: {
       type: Sequelize.INTEGER,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    tags: {
-      type: Sequelize.STRING,
     },
   },
     {
@@ -40,6 +34,7 @@ export default (connect) => {
           Task.belongsTo(models.TaskStatus, { foreignKey: 'status' });
           Task.belongsTo(models.User, { as: 'Assignee', foreignKey: 'assignedTo' });
           Task.belongsTo(models.User, { as: 'Creator', foreignKey: 'creator' });
+          Task.belongsToMany(models.Tag, { through: 'TaskTag' });
         },
       },
       freezeTableName: true,

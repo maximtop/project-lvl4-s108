@@ -9,6 +9,7 @@ block content
         +input(f, 'name', 'Name')
         +textarea(f, 'description', 'Description')
         +select(f, 'assignedTo', 'Assigned to', users, {value: 'id', text: 'fullName'})
-        +input(f, 'creator', 'Creator')
+        //+input(f, 'creator', 'Creator')
         +select(f, 'status', 'Status', taskStatuses, {value: 'id', text: 'name'})
+        +input(f, 'tags', 'Tags')
         +button(f, 'Create')

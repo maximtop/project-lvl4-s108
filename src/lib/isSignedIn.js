@@ -1,6 +1,6 @@
 export default async (ctx, next) => {
   if (ctx.session.userId || !ctx.session.userId) {
-    ctx.session.userId = 4;
+    ctx.session.userId = '1';
     await next();
   } else {
     ctx.flash.set('Sign in first');

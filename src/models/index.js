@@ -1,20 +1,21 @@
 import getUser from './User';
 import getTaskStatus from './TaskStatus';
 import getTask from './Task';
+import getTag from './Tag';
+import getTaskTag from './TaskTag';
 
 export default (connect) => {
   const models = {
     User: getUser(connect),
     TaskStatus: getTaskStatus(connect),
     Task: getTask(connect),
+    Tag: getTag(connect),
+    TaskTag: getTaskTag(connect),
   };
   Object.keys(models).forEach((modelName) => {
-    console.log(models[modelName]);
     if ('associate' in models[modelName]) {
       models[modelName].associate(models);
     }
   });
-  // models.TaskStatus.hasMany(models.Task);
-  // models.Task.belongsTo(models.TaskStatus);
   return models;
 };

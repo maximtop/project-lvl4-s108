@@ -12,8 +12,10 @@ block content
         a(href=urlFor('user', task.Assignee.id ))= task.Assignee.fullName
       p Status:
       h3= task.TaskStatus.name
-      p Tag:
-      h3= task.tag
+      p Tags:
+      h3
+        each Tag in task.Tags
+          p= Tag.name
       p Creator:
       h3= task.Creator.fullName
   .row.justify-content-center
