@@ -5,10 +5,11 @@ block content
       h1 New Task
   .row.justify-content-center.mt-5
     .col-8
-      +formFor(f, { url: urlFor('tasks'), method: 'post' })
+      +formFor(f, { url: urlFor('taskUpdate', f.object.id), method: 'post' })
         +input(f, 'name', 'Name')
         +textarea(f, 'description', 'Description')
         +select(f, 'assignedTo', 'Assigned to', users, {value: 'id', text: 'fullName'})
         +select(f, 'status', 'Status', taskStatuses, {value: 'id', text: 'name'})
         +input(f, 'tags', 'Tags')
-        +button(f, 'Create')
+        input(type="hidden" name="_method" value="PATCH")
+        +button(f, 'Save')

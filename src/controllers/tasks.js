@@ -1,6 +1,11 @@
 import buildFormObj from '../lib/formObjectBuilder';
 import isSignedIn from '../lib/isSignedIn';
 
+const getTagNames = rawTagsData =>
+  rawTagsData.split(',')
+    .map(tagName => tagName.trim())
+    .filter(tagName => tagName.length > 0);
+
 export default (router, { Task, User, TaskStatus, Tag }) => {
   router
     .use('/tasks', isSignedIn)
@@ -28,10 +33,9 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
       form.creator = ctx.session.userId;
       const users = await User.findAll();
       const taskStatuses = await TaskStatus.findAll();
-      const tagNames = form.tags.split(',')
-        .map(tagName => tagName.trim())
-        .filter(tagName => tagName.length > 0);
+      const tagNames = getTagNames(form.tags);
       const task = Task.build(form);
+      task.tags = form.tags;
       try {
         await task.save();
         if (tagNames.length > 0) {
@@ -59,37 +63,52 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
           { model: User, as: 'Creator' },
           { model: User, as: 'Assignee' },
             Tag] });
-        console.log(task);
         ctx.render('tasks/task', { task });
       } catch (e) {
         console.log(e);
       }
     })
-    // .get('taskEdit', '/tasks/:id/edit', async (ctx) => {
-    //   const id = ctx.params.id;
-    //   const task = await Task.findById(id);
-    //   ctx.render('tasks/edit', { f: buildFormObj(task) });
-    // })
-    // .patch('taskUpdate', '/tasks/:id', async (ctx) => {
-    //   const id = ctx.params.id;
-    //   const form = ctx.request.body.form;
-    //   const task = await Task.findById(id);
-    //   try {
-    //     await task.update({
-    //       email: form.email,
-    //       firstName: form.firstName,
-    //       lastName: form.lastName,
-    //     }, {
-    //       where: {
-    //         id,
-    //       },
-    //     });
-    //     ctx.flash.set('task info was updated');
-    //     ctx.redirect(router.url('tasks'));
-    //   } catch (e) {
-    //     ctx.render('tasks/edit', { f: buildFormObj(task, e) });
-    //   }
-    // })
+    .get('taskEdit', '/tasks/:id/edit', async (ctx) => {
+      const id = ctx.params.id;
+      const task = await Task.findById(id, { include: [Tag] });
+      const users = await User.findAll();
+      const taskStatuses = await TaskStatus.findAll();
+      task.tags = task.Tags.map(tag => tag.name).join(', ');
+      ctx.render('tasks/edit', { f: buildFormObj(task), task, users, taskStatuses });
+    })
+    .patch('taskUpdate', '/tasks/:id', async (ctx) => {
+      const id = ctx.params.id;
+      const form = ctx.request.body.form;
+      const task = await Task.findById(id);
+      try {
+        await task.update({
+          name: form.name,
+          description: form.description,
+          assignedTo: form.assignedTo,
+          status: form.status,
+        }, {
+          where: {
+            id,
+          },
+        });
+        const tagNames = getTagNames(form.tags);
+        if (tagNames.length > 0) {
+          Promise.all(tagNames.map(async (tagName) => {
+            const tag = await Tag.findOne({where: {name: tagName}});
+            if (tag) {
+              await task.addTags(tag);
+            } else {
+              const addTag = await Tag.create({name: tagName});
+              await task.addTags(addTag);
+            }
+          }));
+        }
+        ctx.flash.set('task info was updated');
+        ctx.redirect(router.url('tasks'));
+      } catch (e) {
+        ctx.render('tasks/edit', { f: buildFormObj(task, e) });
+      }
+    })
     .delete('taskDelete', '/tasks/:id', async (ctx) => {
       const id = ctx.params.id;
       await Task.destroy({
