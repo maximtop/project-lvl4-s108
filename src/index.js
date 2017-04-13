@@ -44,10 +44,11 @@ export default () => {
   }));
   /* eslint-enable */
   app.use(serve(path.join(__dirname, '..', 'public')));
-  app.use(middleware({
-    config: getWebpackConfig(),
-  }));
-
+  if (process.env.NODE_ENV !== 'test') {
+    app.use(middleware({
+      config: getWebpackConfig(),
+    }));
+  }
   app.use(koaLogger());
   const router = new Router();
   addRoutes(router, container);

@@ -4,7 +4,6 @@ console:
 	npm run gulp console
 
 init:
-	rm -rf database.sqlite
 	npm run gulp init
 
 start:
@@ -21,7 +20,7 @@ build:
 	npm run build
 
 test:
-	npm test
+	NODE_ENV=test npm test
 
 check-types:
 	npm run flow
