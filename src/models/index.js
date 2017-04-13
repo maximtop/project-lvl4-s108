@@ -7,10 +7,10 @@ import getTaskTag from './TaskTag';
 export default (connect) => {
   const models = {
     User: getUser(connect),
+    TaskTag: getTaskTag(connect),
     TaskStatus: getTaskStatus(connect),
     Task: getTask(connect),
     Tag: getTag(connect),
-    TaskTag: getTaskTag(connect),
   };
   Object.keys(models).forEach((modelName) => {
     if ('associate' in models[modelName]) {
