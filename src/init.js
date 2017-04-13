@@ -15,4 +15,9 @@ export default async () => {
     { email: 'maximtop2@gmail.com', firstName: 'Maxim2', lastName: 'Topciu2', passwordDigest: '123' },
     { email: 'maximtop3@gmail.com', firstName: 'Maxim3', lastName: 'Topciu3', passwordDigest: '123' },
   ]);
+  // await models.Task.bulkCreate([
+  //   { name: 'Task1', creator: '1', assignedTo: '1' },
+  //   { name: 'Task1', creator: '1', assignedTo: '2' },
+  //   { name: 'Task1', creator: '1', assignedTo: '2' },
+  // ]);
 };
