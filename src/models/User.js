@@ -43,8 +43,6 @@ export default (connect) => {
     },
     classMethods: {
       associate: (models) => {
-        // User.hasMany(models.Task);
-        // User.hasMany(models.Task, { foreignKey: 'creator' });
         User.hasMany(models.Task, { as: 'AssignedTask', foreignKey: 'assignedTo' });
       },
     },
