@@ -34,3 +34,16 @@ mixin select(f, property, label, objects, options = { value: '1', text: 'name' }
           option(value= object[options['value']], selected= object[options['value']] === parseInt(value) )= `${object[options['text']]}`
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')
+
+
+mixin filter(f, property, label, objects, options = { value: '1', text: 'name' })
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group.p-1(class=(f.errors[property] && 'has-danger'))
+    label= label
+    select(name=property class='form-control' value= `${value}`)
+      option(value= 'All') All
+      if objects
+        each object in objects
+          option(value= object[options['value']], selected= object[options['value']] === parseInt(value) )= `${object[options['text']]}`
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({message}) => message).join('. ')

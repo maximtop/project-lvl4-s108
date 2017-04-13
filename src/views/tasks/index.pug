@@ -1,6 +1,14 @@
 extends /layouts/application.pug
 
 block content
+  +formFor(f, { url: urlFor('tasks'), method: 'get' })
+    .row
+      +filter(f, 'creator', 'Creator', users, {value: 'id', text: 'fullName'})
+      +filter(f, 'tag', 'Tag', tags, {value: 'id', text: 'name'})
+      +filter(f, 'status', 'Status', taskStatuses, {value: 'id', text: 'name'})
+      +filter(f, 'assignee', 'Assignee', users, {value: 'id', text: 'fullName'})
+      //input(type="hidden" name="_method" value="GET")
+      +button(f, 'Apply filter')
   table.table.table-stripped
     thead
       tr
