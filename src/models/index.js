@@ -9,8 +9,8 @@ export default (connect) => {
     User: getUser(connect),
     TaskTag: getTaskTag(connect),
     TaskStatus: getTaskStatus(connect),
-    Task: getTask(connect),
     Tag: getTag(connect),
+    Task: getTask(connect),
   };
   Object.keys(models).forEach((modelName) => {
     if ('associate' in models[modelName]) {
