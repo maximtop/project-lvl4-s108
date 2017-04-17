@@ -38,17 +38,6 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
             { model: Tag, where: filter.tag },
             { model: User, as: 'Creator', where: filter.creator },
           ],
-          // include: [
-          //   { model: User, as: 'Assignee' },
-          //   { model: TaskStatus },
-          //   { model: Tag, where: filter.tag },
-          //   { model: User, as: 'Creator' },
-          // ],
-          // where: {
-          //   status: filter.status.id,
-          //   creator: filter.creator.id,
-          //   assignedTo: filter.assignee.id,
-          // },
         });
         const users = await User.findAll();
         const taskStatuses = await TaskStatus.findAll();
