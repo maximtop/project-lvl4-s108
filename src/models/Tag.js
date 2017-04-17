@@ -13,11 +13,11 @@ export default (connect) => {
       },
     },
   }, {
-    // classMethods: {
-    //   associate: (models) => {
-    //     Tag.belongsToMany(models.Task, { through: 'TaskTag' });
-    //   },
-    // },
+    classMethods: {
+      associate: (models) => {
+        Tag.belongsToMany(models.Task, { through: 'TaskTag' });
+      },
+    },
     freezeTableName: true,
   });
   return Tag;

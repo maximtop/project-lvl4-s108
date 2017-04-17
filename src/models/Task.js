@@ -29,14 +29,14 @@ export default (connect) => {
     },
   },
     {
-      // classMethods: {
-      //   associate: (models) => {
-      //     Task.belongsTo(models.TaskStatus, { foreignKey: 'status' });
-      //     Task.belongsTo(models.User, { as: 'Assignee', foreignKey: 'assignedTo' });
-      //     Task.belongsTo(models.User, { as: 'Creator', foreignKey: 'creator' });
-      //     Task.belongsToMany(models.Tag, { through: 'TaskTag' });
-      //   },
-      // },
+      classMethods: {
+        associate: (models) => {
+          Task.belongsTo(models.TaskStatus, { foreignKey: 'status' });
+          Task.belongsTo(models.User, { as: 'Assignee', foreignKey: 'assignedTo' });
+          Task.belongsTo(models.User, { as: 'Creator', foreignKey: 'creator' });
+          Task.belongsToMany(models.Tag, { through: 'TaskTag' });
+        },
+      },
       freezeTableName: true,
     });
   return Task;

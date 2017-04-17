@@ -41,11 +41,11 @@ export default (connect) => {
         return `${this.firstName} ${this.lastName}`;
       },
     },
-    // classMethods: {
-    //   associate: (models) => {
-    //     User.hasMany(models.Task, { as: 'AssignedTask', foreignKey: 'assignedTo' });
-    //   },
-    // },
+    classMethods: {
+      associate: (models) => {
+        User.hasMany(models.Task, { as: 'AssignedTask', foreignKey: 'assignedTo' });
+      },
+    },
     freezeTableName: true, // Model tableName will be the same as the model name
   });
   return User;
