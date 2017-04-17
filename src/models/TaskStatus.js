@@ -13,11 +13,11 @@ export default (connect) => {
       },
     },
   }, {
-    classMethods: {
-      associate: (models) => {
-        TaskStatus.hasMany(models.Task);
-      },
-    },
+    // classMethods: {
+    //   associate: (models) => {
+    //     TaskStatus.hasMany(models.Task);
+    //   },
+    // },
     freezeTableName: true,
   });
   return TaskStatus;

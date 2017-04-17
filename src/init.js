@@ -4,12 +4,12 @@ import getModels from './models';
 export default async () => {
   const models = getModels(connect);
   await Promise.all(Object.values(models).map(async model => model.sync({ force: true })));
-  await Promise.all(Object.values(models).map(async (model) => {
-    if ('associate' in model) {
-      model.associate(models);
-      await model.sync({ });
-    }
-  }));
+  // await Promise.all(Object.values(models).map(async (model) => {
+  //   if ('associate' in model) {
+  //     model.associate(models);
+  //     await model.sync({ });
+  //   }
+  // }));
   await models.TaskStatus.bulkCreate([
     { name: 'New' },
     { name: 'In Progress' },
