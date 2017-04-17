@@ -12,10 +12,10 @@ export default (connect) => {
     Tag: getTag(connect),
     Task: getTask(connect),
   };
-  Object.keys(models).forEach((modelName) => {
-    if ('associate' in models[modelName]) {
-      models[modelName].associate(models);
-    }
-  });
+  // Object.values(models).forEach((model) => {
+  //   if ('associate' in model) {
+  //     model.associate(models);
+  //   }
+  // });
   return models;
 };
