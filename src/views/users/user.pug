@@ -16,6 +16,6 @@ block content
             a(href=urlFor('task', task.id ))= task.name
   .row.justify-content-center
     .col-1
-      a(href=urlFor('userEdit', user.id) data-method='get' role='button' class='btn btn-primary' rel='nofollow') Edit
+      a(href=urlFor('userEdit', user.id) data-method='get' role='button' class=`btn btn-primary ${(userId() !== user.id) ? 'disabled' : ''}` rel='nofollow') Edit
     .col-1
-      a(href=urlFor('userDelete', user.id) data-method='delete' role='button' class='btn btn-danger' rel='nofollow') Delete
+      a(href=urlFor('userDelete', user.id) data-method='delete' role='button' class=`btn btn-danger ${(userId() !== user.id) ? 'disabled' : ''}` rel='nofollow') Delete

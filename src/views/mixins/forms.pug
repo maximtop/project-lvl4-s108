@@ -14,7 +14,7 @@ mixin input(f, property, label, options = { as: 'text' })
 
 mixin button(f, value = 'Save', type = 'submit')
   .form-group
-    input(class='btn' type=`${type}` value=`${value}`)
+    input(class='btn allign-bottom' type=`${type}` value=`${value}`)
 
 mixin textarea(f, property, label, options = { rows: '3' })
   - const value = f.object[property] === undefined ? '' : f.object[property]
