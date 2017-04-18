@@ -7,10 +7,10 @@ import getTaskTag from './TaskTag';
 export default (connect) => {
   const models = {
     User: getUser(connect),
-    TaskTag: getTaskTag(connect),
     TaskStatus: getTaskStatus(connect),
-    Tag: getTag(connect),
     Task: getTask(connect),
+    TaskTag: getTaskTag(connect),
+    Tag: getTag(connect),
   };
   // models.User.hasMany(models.Task, { as: 'AssignedTask', foreignKey: 'assignedTo' });
   // models.Task.belongsTo(models.User, { as: 'Assignee', foreignKey: 'assignedTo' });
