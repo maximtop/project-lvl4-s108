@@ -11,10 +11,4 @@ block content
         tr
           td= taskStatus.id
           td= taskStatus.name
-            span.ml-1
-              a(href=urlFor('taskStatusDelete', taskStatus.id) data-method='delete' role='button' class='btn btn-danger' rel='nofollow') Delete
-              //|
-              //| |
-              //|
-              //a(href='task-statuses/?_method=PATCH') edit
           //TODO add links to delete and update

@@ -45,7 +45,6 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
         const search = {};
         ctx.render('tasks', { f: buildFormObj(search), tasks, users, taskStatuses, tags });
       } catch (e) {
-        console.log(e);
         rollbar.handleError(e);
       }
     })

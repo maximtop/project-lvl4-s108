@@ -2,7 +2,7 @@ extends /layouts/application.pug
 
 block content
   +formFor(f, { url: urlFor('tasks'), method: 'get' })
-    .row
+    .row.d-flex.align-items-center
       +filter(f, 'creator', 'Creator', users, {value: 'id', text: 'fullName'})
       +filter(f, 'tag', 'Tag', tags, {value: 'id', text: 'name'})
       +filter(f, 'status', 'Status', taskStatuses, {value: 'id', text: 'name'})

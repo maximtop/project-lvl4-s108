@@ -9,11 +9,11 @@ export default (router, { User, Task }) => {
       const users = await User.findAll();
       ctx.render('users', { users });
     })
-    .get('newUser', '/users/new', (ctx) => {
+    .get('newUser', '/user/new', (ctx) => {
       const user = User.build();
       ctx.render('users/new', { f: buildFormObj(user) });
     })
-    .post('users', '/users', async (ctx) => {
+    .post('newUser', '/user/new', async (ctx) => {
       const form = ctx.request.body.form;
       const user = User.build(form);
       try {
@@ -27,7 +27,7 @@ export default (router, { User, Task }) => {
     .get('user', '/users/:id', async (ctx) => {
       try {
         const user = await User.findById(ctx.params.id, { include: [{ model: Task, as: 'AssignedTask' }] });
-        ctx.render('users/profile', { user });
+        ctx.render('users/user', { user });
       } catch (e) {
         rollbar.handleError(e);
       }
@@ -36,6 +36,21 @@ export default (router, { User, Task }) => {
       const id = ctx.params.id;
       const user = await User.findById(id);
       ctx.render('users/edit', { f: buildFormObj(user) });
+    })
+    .delete('userDelete', '/users/:id', async (ctx) => {
+      const id = ctx.params.id;
+      if (ctx.session.userId === id) {
+        await User.destroy({
+          where: {
+            id,
+          },
+        });
+        ctx.flash.set(`User #${id} was deleted`);
+        ctx.redirect(router.url('users'));
+      } else {
+        ctx.flash.set('You can\'t delete other users');
+        ctx.redirect(router.url('users'));
+      }
     })
     .patch('userUpdate', '/users/:id', async (ctx) => {
       const id = ctx.params.id;
