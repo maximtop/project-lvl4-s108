@@ -1,4 +1,3 @@
-import rollbar from 'rollbar';
 import buildFormObj from '../lib/formObjectBuilder';
 import isSignedIn from '../lib/isSignedIn';
 
@@ -29,7 +28,7 @@ export default (router, { User, Task }) => {
         const user = await User.findById(ctx.params.id, { include: [{ model: Task, as: 'AssignedTask' }] });
         ctx.render('users/user', { user });
       } catch (e) {
-        rollbar.handleError(e);
+        throw e;
       }
     })
     .get('userEdit', '/users/:id/edit', async (ctx) => {

@@ -1,5 +1,4 @@
 import url from 'url';
-import rollbar from 'rollbar';
 import buildFormObj from '../lib/formObjectBuilder';
 import isSignedIn from '../lib/isSignedIn';
 
@@ -45,7 +44,7 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
         const search = {};
         ctx.render('tasks', { f: buildFormObj(search), tasks, users, taskStatuses, tags });
       } catch (e) {
-        rollbar.handleError(e);
+        throw e;
       }
     })
     .get('newTask', '/tasks/new', async (ctx) => {
@@ -55,7 +54,7 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
         const taskStatuses = await TaskStatus.findAll();
         ctx.render('tasks/new', { f: buildFormObj(task), users, taskStatuses });
       } catch (e) {
-        rollbar.handleError(e);
+        throw e;
       }
     })
     .post('tasks', '/tasks', async (ctx) => {
@@ -82,7 +81,6 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
         ctx.flash.set(`task *${form.name}* has been created`);
         ctx.redirect(router.url('tasks'));
       } catch (e) {
-        rollbar.handleError(e);
         ctx.render('tasks/new', { f: buildFormObj(task, e), users, taskStatuses });
       }
     })
@@ -97,7 +95,7 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
           });
         ctx.render('tasks/task', { task });
       } catch (e) {
-        rollbar.handleError(e);
+        throw e;
       }
     })
     .get('taskEdit', '/tasks/:id/edit', async (ctx) => {
@@ -141,7 +139,6 @@ export default (router, { Task, User, TaskStatus, Tag }) => {
         ctx.flash.set('task info was updated');
         ctx.redirect(router.url('tasks'));
       } catch (e) {
-        rollbar.handleError(e);
         ctx.render('tasks/edit', { f: buildFormObj(task, e), users, taskStatuses });
       }
     })

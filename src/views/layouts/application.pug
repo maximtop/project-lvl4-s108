@@ -13,14 +13,15 @@ html(lang="en")
       a.navbar-brand(href="/") Maximtop Task Manager
       .collapse.navbar-collapse
         ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href=urlFor('users')) Users
-          li.nav-item.active
-            a.nav-link(href=urlFor('tasks')) Tasks
-          li.nav-item.active
-            a.nav-link(href=urlFor('newTask')) New Task
-          li.nav-item.active
-            a.nav-link(href=urlFor('taskStatuses')) Task Statuses
+          if isSignedIn()
+            li.nav-item.active
+              a.nav-link(href=urlFor('users')) Users
+            li.nav-item.active
+              a.nav-link(href=urlFor('tasks')) Tasks
+            li.nav-item.active
+              a.nav-link(href=urlFor('newTask')) New Task
+            li.nav-item.active
+              a.nav-link(href=urlFor('taskStatuses')) Task Statuses
 
         ul.navbar-nav
           if isSignedIn()

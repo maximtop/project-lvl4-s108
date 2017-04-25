@@ -15,4 +15,4 @@ block content
           td= user.createdAt
           td
             span.ml-1
-              a(href='users/' + user.id) Profile
+              a(href= urlFor('user', user.id)) Profile
